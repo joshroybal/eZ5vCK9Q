@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+# ./driver.py handle </dev/null &>/dev/null &
+
+# joshroybal ID: 109439405297980409
+
+import sys, time, datetime, subprocess, twitter_api, mastodon_api, bot
+
+def main(twitter, mastodon, handle, n):
+    subprocess.run('cd /home/slacker/src/Python3/mastodon/mastodon_to_twitter', shell=True)
+    t = mastodon.account_statuses(109439405297980409)
+    for toot in reversed(t[:n]):
+        if toot['reblog'] is not None:
+            text = toot['reblog']['url']
+        else:
+            text = toot['url']
+        # print(text)
+        twitter.update_status(status = text + ' #mastodon')
+        # time.sleep(5)
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        sys.stderr.write('Usage: %s handle n\n' % sys.argv[0])
+        sys.exit(1)
+    try:
+        n = int(sys.argv[2])
+        main(twitter_api.api(), mastodon_api.api(), sys.argv[1], n)
+    except Exception as error:
+        sys.stderr.write('%s\n' % error)
+        sys.exit(1)
