@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 # ./driver.py handle </dev/null &>/dev/null &
 
-# joshroybal ID: 109439405297980409
-
 import sys, time, datetime, subprocess, twitter_api, mastodon_api, bot
 
 def main(twitter, mastodon, handle, n):
