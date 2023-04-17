@@ -5,7 +5,7 @@ import sys, time, datetime, subprocess, twitter_api, mastodon_api, bot
 
 def main(twitter, mastodon, handle, n):
     subprocess.run('cd /home/slacker/src/Python3/mastodon/mastodon_to_twitter', shell=True)
-    t = mastodon.account_statuses(109439405297980409)
+    t = mastodon.account_statuses()
     for toot in reversed(t[:n]):
         if toot['reblog'] is not None:
             text = toot['reblog']['url']
